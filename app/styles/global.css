@@ -11,3 +11,17 @@ footer {
   color: #ccc;
   padding-top: 80px;
 }
+
+.page {
+  text-align: center;
+  padding: 20px;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 20% 20% 40% 20%;
+  grid-template-rows: auto;
+  padding-bottom: 5px;
+}

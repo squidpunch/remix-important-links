@@ -1,34 +1,66 @@
 import type { MetaFunction, LinksFunction, LoaderFunction } from "remix";
+import type { ReactElement } from "react";
+import { PrismaClient, WebLinks } from "@prisma/client";
 import { useRouteData } from "remix";
-
 import stylesUrl from "../styles/index.css";
 
-export let meta: MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!"
+    title: "Our Super Special Link App",
+    description:
+      "A collection of important links with notes on why they are important",
   };
 };
 
-export let links: LinksFunction = () => {
+export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
-export let loader: LoaderFunction = async () => {
-  return { message: "this is awesome 😎" };
+export const loader: LoaderFunction = async () => {
+  const prisma = new PrismaClient();
+
+  async function main() {
+    const allLinks = await prisma.webLinks.findMany();
+    return allLinks;
+  }
+
+  return main()
+    .catch((e) => {
+      throw e;
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
 };
 
-export default function Index() {
-  let data = useRouteData();
+export default function Index(): ReactElement {
+  const data = useRouteData();
 
   return (
-    <div style={{ textAlign: "center", padding: 20 }}>
-      <h2>Welcome to Remix!</h2>
-      <p>
-        <a href="https://remix.run/dashboard/docs">Check out the docs</a> to get
-        started.
-      </p>
-      <p>Message from the loader: {data.message}</p>
+    <div className="page">
+      <h2>Important Links</h2>
+      <div className="container">
+        <div className="header">Category</div>
+        <div className="header">Name</div>
+        <div className="header" style={{ textAlign: "left" }}>
+          Notes
+        </div>
+        <div className="header">Actions</div>
+      </div>
+
+      {data?.map(({ id, category, name, link, notes }: WebLinks) => (
+        <div key={id} className="container">
+          <div>{category}</div>
+          <div>{name}</div>
+          <div style={{ textAlign: "left" }}>{notes}</div>
+          <div>
+            <a href={link} target="_blank" rel="noreferrer">
+              Visit
+            </a>{" "}
+            | Edit | Delete
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
