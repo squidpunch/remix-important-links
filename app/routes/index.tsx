@@ -1,19 +1,26 @@
-import type { MetaFunction, LinksFunction, LoaderFunction } from "remix";
+import type { MetaFunction, LoaderFunction } from "remix";
 import type { ReactElement } from "react";
 import { PrismaClient, WebLinks } from "@prisma/client";
 import { useRouteData } from "remix";
-import stylesUrl from "../styles/index.css";
+import {
+  Table,
+  Container,
+  Heading,
+  Button,
+  ButtonGroup,
+  Th,
+  Tr,
+  Td,
+  Tbody,
+  Thead,
+} from "@chakra-ui/react";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Our Super Special Link App",
+    title: "Our Super Special Link Listing App",
     description:
       "A collection of important links with notes on why they are important",
   };
-};
-
-export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
 export const loader: LoaderFunction = async () => {
@@ -37,30 +44,55 @@ export default function Index(): ReactElement {
   const data = useRouteData();
 
   return (
-    <div className="page">
-      <h2>Important Links</h2>
-      <div className="container">
-        <div className="header">Category</div>
-        <div className="header">Name</div>
-        <div className="header" style={{ textAlign: "left" }}>
-          Notes
-        </div>
-        <div className="header">Actions</div>
-      </div>
-
-      {data?.map(({ id, category, name, link, notes }: WebLinks) => (
-        <div key={id} className="container">
-          <div>{category}</div>
-          <div>{name}</div>
-          <div style={{ textAlign: "left" }}>{notes}</div>
-          <div>
-            <a href={link} target="_blank" rel="noreferrer">
-              Visit
-            </a>{" "}
-            | Edit | Delete
-          </div>
-        </div>
-      ))}
-    </div>
+    <Container maxW={"6xl"} mt={10}>
+      <Heading pb={2}>Important Links</Heading>
+      <Table variant="striped" colorScheme="gray">
+        <Thead>
+          <Tr>
+            <Th>Category</Th>
+            <Th>Name</Th>
+            <Th>Notes</Th>
+            <Th>
+              <Button colorScheme="blue" as="a" href="/webLink/new">
+                + Add New
+              </Button>
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data?.map(({ id, category, name, link, notes }: WebLinks) => (
+            <Tr key={id}>
+              <Td>{category}</Td>
+              <Td>{name}</Td>
+              <Td style={{ textAlign: "left" }}>{notes}</Td>
+              <Td>
+                <ButtonGroup variant="outline" spacing="6" pb="2">
+                  <Button
+                    size="sm"
+                    variant="solid"
+                    colorScheme="blue"
+                    as="a"
+                    href={link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="solid"
+                    colorScheme="blue"
+                    as="a"
+                    href={`/webLink/${id}/edit`}
+                  >
+                    Edit
+                  </Button>
+                </ButtonGroup>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </Container>
   );
 }

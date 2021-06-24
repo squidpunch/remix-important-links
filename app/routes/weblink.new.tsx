@@ -1,13 +1,16 @@
 import { PrismaClient } from "@prisma/client";
+import { ActionFunction, Link, redirect } from "remix";
+import {
+  Input,
+  Center,
+  Textarea,
+  Container,
+  Heading,
+  Button,
+  VStack,
+  HStack,
+} from "@chakra-ui/react";
 import type { ReactElement } from "react";
-import { ActionFunction, redirect } from "remix";
-import type { LinksFunction } from "remix";
-
-import stylesUrl from "../styles/weblink.new.css";
-
-export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
-};
 
 export const action: ActionFunction = async ({ request }) => {
   const body = new URLSearchParams(await request.text());
@@ -42,48 +45,38 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function WebLinkNew(): ReactElement {
   return (
-    <div className="page">
-      <h2>Create a new Link</h2>
+    <Container maxW={"6xl"} mt={10}>
+      <Center>
+        <Heading pb={2}>Create a new Link</Heading>
+      </Center>
       <form method="post">
-        <div className="container-input">
-          <div className="label-wrapper">
-            <label htmlFor="name">Name:</label>
-          </div>
-          <div className="input-wrapper">
-            <input required type="text" name="name" />
-          </div>
-        </div>
-        <div className="container-input">
-          <div className="label-wrapper">
-            <label htmlFor="category">Category:</label>
-          </div>
-          <div className="input-wrapper">
-            <input required type="text" name="category" />
-          </div>
-        </div>
-        <div className="container-input">
-          <div className="label-wrapper">
-            <label htmlFor="link">Link:</label>
-          </div>
-          <div className="input-wrapper">
-            <input required type="text" name="link" />
-          </div>
-        </div>
-        <div className="container-input">
-          <div className="label-wrapper">
-            <label htmlFor="notes">Notes:</label>
-          </div>
-          <div className="input-wrapper">
-            <textarea required rows={10} name="notes" />
-          </div>
-        </div>
-        <div className="container-input">
-          <div style={{ width: "25%" }}></div>
-          <div className="input-wrapper">
-            <button type="submit">Create New Link</button>
-          </div>
-        </div>
+        <Center>
+          <VStack>
+            <Input placeholder="Name" required type="text" name="name" />
+            <Input
+              placeholder="Category"
+              required
+              type="text"
+              name="category"
+            />
+            <Input placeholder="Url" required type="text" name="link" />
+            <Textarea
+              placeholder="Notes about the link"
+              required
+              rows={10}
+              name="notes"
+            />
+            <HStack>
+              <Button variant="ghost" colorScheme="blue" as="a" href="/">
+                Cancel
+              </Button>
+              <Button colorScheme="blue" type="submit">
+                Create New Link
+              </Button>
+            </HStack>
+          </VStack>
+        </Center>
       </form>
-    </div>
+    </Container>
   );
 }

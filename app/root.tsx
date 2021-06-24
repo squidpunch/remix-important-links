@@ -45,16 +45,16 @@ export default function App(): ReactElement {
 
   const data = useRouteData();
   return (
-    <ChakraProvider>
-      <Document>
+    <Document>
+      {/* include the scripts, or not! */}
+      {includeScripts && <Scripts />}
+      <ChakraProvider>
         <Outlet />
-        {/* include the scripts, or not! */}
-        {includeScripts && <Scripts />}
         <footer>
           <p>This page was rendered at {data.date.toLocaleString()}</p>
         </footer>
-      </Document>
-    </ChakraProvider>
+      </ChakraProvider>
+    </Document>
   );
 }
 
