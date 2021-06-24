@@ -10,6 +10,7 @@ import {
 import { Outlet } from "react-router-dom";
 import stylesUrl from "./styles/global.css";
 import type { ReactElement } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
@@ -44,14 +45,16 @@ export default function App(): ReactElement {
 
   const data = useRouteData();
   return (
-    <Document>
-      <Outlet />
-      {/* include the scripts, or not! */}
-      {includeScripts && <Scripts />}
-      <footer>
-        <p>This page was rendered at {data.date.toLocaleString()}</p>
-      </footer>
-    </Document>
+    <ChakraProvider>
+      <Document>
+        <Outlet />
+        {/* include the scripts, or not! */}
+        {includeScripts && <Scripts />}
+        <footer>
+          <p>This page was rendered at {data.date.toLocaleString()}</p>
+        </footer>
+      </Document>
+    </ChakraProvider>
   );
 }
 
