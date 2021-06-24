@@ -1,0 +1,13 @@
+.container-input {
+  margin: auto;
+  width: 50%;
+  padding-bottom: 5px;
+  text-align: left;
+  display: flex;
+}
+.label-wrapper {
+  width: 25%;
+}
+.input-wrapper {
+  width: 75%;
+}
