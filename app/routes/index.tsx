@@ -1,7 +1,7 @@
 import type { MetaFunction, LoaderFunction } from "remix";
 import type { ReactElement } from "react";
 import { PrismaClient, WebLinks } from "@prisma/client";
-import { useRouteData } from "remix";
+import { useRouteData, Link } from "remix";
 import {
   Table,
   Container,
@@ -53,9 +53,9 @@ export default function Index(): ReactElement {
             <Th>Name</Th>
             <Th>Notes</Th>
             <Th>
-              <Button colorScheme="blue" as="a" href="/webLink/new">
-                + Add New
-              </Button>
+              <Link to="/webLink/new">
+                <Button colorScheme="blue">+ Add New</Button>
+              </Link>
             </Th>
           </Tr>
         </Thead>

@@ -10,7 +10,13 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { ReactElement } from "react";
-import { useRouteData, LoaderFunction, ActionFunction, redirect } from "remix";
+import {
+  useRouteData,
+  LoaderFunction,
+  ActionFunction,
+  redirect,
+  Link,
+} from "remix";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const prisma = new PrismaClient();
@@ -103,9 +109,11 @@ export default function WebLinkEdit(): ReactElement {
               value={data.notes}
             />
             <HStack>
-              <Button variant="ghost" colorScheme="blue" as="a" href="/">
-                Cancel
-              </Button>
+              <Link to="/">
+                <Button variant="ghost" colorScheme="blue">
+                  Cancel
+                </Button>
+              </Link>
               <Button colorScheme="blue" type="submit">
                 Update
               </Button>

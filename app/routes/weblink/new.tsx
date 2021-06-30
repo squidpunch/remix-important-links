@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ActionFunction, redirect } from "remix";
+import { ActionFunction, redirect, Link } from "remix";
 import {
   Input,
   Center,
@@ -67,9 +67,11 @@ export default function WebLinkNew(): ReactElement {
               name="notes"
             />
             <HStack>
-              <Button variant="ghost" colorScheme="blue" as="a" href="/">
-                Cancel
-              </Button>
+              <Link to="/">
+                <Button variant="ghost" colorScheme="blue">
+                  Cancel
+                </Button>
+              </Link>
               <Button colorScheme="blue" type="submit">
                 Create New Link
               </Button>
