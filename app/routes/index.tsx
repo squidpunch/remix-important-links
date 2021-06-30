@@ -51,7 +51,7 @@ export default function Index(): ReactElement {
 
   return (
     <Container maxW={"6xl"} mt={10}>
-      <Heading pb={2}>Important Links</Heading>
+      <Heading pb={2}>Remix Resources</Heading>
       <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
