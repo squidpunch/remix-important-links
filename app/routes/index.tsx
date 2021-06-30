@@ -1,4 +1,4 @@
-import type { MetaFunction, LoaderFunction } from "remix";
+import type { MetaFunction, LoaderFunction, HeadersFunction } from "remix";
 import type { ReactElement } from "react";
 import { PrismaClient, WebLinks } from "@prisma/client";
 import { useRouteData, Link } from "remix";
@@ -14,6 +14,12 @@ import {
   Tbody,
   Thead,
 } from "@chakra-ui/react";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "cache-control": "max-age=60, public",
+  };
+};
 
 export const meta: MetaFunction = () => {
   return {
