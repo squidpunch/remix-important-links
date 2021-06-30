@@ -1,16 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { ActionFunction, redirect, Link } from "remix";
-import {
-  Input,
-  Center,
-  Textarea,
-  Container,
-  Heading,
-  Button,
-  VStack,
-  HStack,
-} from "@chakra-ui/react";
+import { ActionFunction, redirect } from "remix";
+import { Center, Container, Heading } from "@chakra-ui/react";
 import type { ReactElement } from "react";
+import WebLinkForm from "../../components/WebLinkForm";
 
 export const action: ActionFunction = async ({ request }) => {
   const body = new URLSearchParams(await request.text());
@@ -49,36 +41,7 @@ export default function WebLinkNew(): ReactElement {
       <Center>
         <Heading pb={2}>Create a new Link</Heading>
       </Center>
-      <form method="post">
-        <Center>
-          <VStack>
-            <Input placeholder="Name" required type="text" name="name" />
-            <Input
-              placeholder="Category"
-              required
-              type="text"
-              name="category"
-            />
-            <Input placeholder="Url" required type="text" name="link" />
-            <Textarea
-              placeholder="Notes about the link"
-              required
-              rows={10}
-              name="notes"
-            />
-            <HStack>
-              <Link to="/">
-                <Button variant="ghost" colorScheme="blue">
-                  Cancel
-                </Button>
-              </Link>
-              <Button colorScheme="blue" type="submit">
-                Create New Link
-              </Button>
-            </HStack>
-          </VStack>
-        </Center>
-      </form>
+      <WebLinkForm />
     </Container>
   );
 }

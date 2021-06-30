@@ -1,22 +1,8 @@
 import { PrismaClient, WebLinks } from "@prisma/client";
-import {
-  Input,
-  Center,
-  Textarea,
-  Container,
-  Heading,
-  Button,
-  VStack,
-  HStack,
-} from "@chakra-ui/react";
+import { Center, Container, Heading } from "@chakra-ui/react";
 import { ReactElement } from "react";
-import {
-  useRouteData,
-  LoaderFunction,
-  ActionFunction,
-  redirect,
-  Link,
-} from "remix";
+import { useRouteData, LoaderFunction, ActionFunction, redirect } from "remix";
+import WebLinkForm from "../../../components/WebLinkForm";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const prisma = new PrismaClient();
@@ -70,57 +56,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function WebLinkEdit(): ReactElement {
-  const data = useRouteData() as WebLinks;
+  const webLink = useRouteData() as WebLinks;
 
   return (
     <Container maxW={"6xl"} mt={10}>
       <Center>
         <Heading pb={2}>Update Link</Heading>
       </Center>
-      <form method="post">
-        <Center>
-          <VStack>
-            <Input
-              placeholder="Name"
-              required
-              type="text"
-              name="name"
-              value={data.name}
-            />
-            <Input
-              placeholder="Category"
-              required
-              type="text"
-              name="category"
-              value={data.category}
-            />
-            <Input
-              placeholder="Url"
-              required
-              type="text"
-              name="link"
-              value={data.link}
-            />
-            <Textarea
-              placeholder="Notes about the link"
-              required
-              rows={10}
-              name="notes"
-              value={data.notes}
-            />
-            <HStack>
-              <Link to="/">
-                <Button variant="ghost" colorScheme="blue">
-                  Cancel
-                </Button>
-              </Link>
-              <Button colorScheme="blue" type="submit">
-                Update
-              </Button>
-            </HStack>
-          </VStack>
-        </Center>
-      </form>
+      <WebLinkForm webLink={webLink} />
     </Container>
   );
 }
