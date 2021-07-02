@@ -7,7 +7,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { WebLinks } from "@prisma/client";
-import { Link } from "remix";
+import { Link, Form, usePendingFormSubmit } from "remix";
 
 import type { ReactElement } from "react";
 
@@ -18,8 +18,9 @@ type WebLinkFormProps = {
 export default function WebLinkForm({
   webLink,
 }: WebLinkFormProps): ReactElement {
+  const pendingForm = usePendingFormSubmit();
   return (
-    <form method="post">
+    <Form method="post">
       <Center>
         <VStack>
           <Input
@@ -56,12 +57,12 @@ export default function WebLinkForm({
                 Cancel
               </Button>
             </Link>
-            <Button colorScheme="blue" type="submit">
-              Save
+            <Button colorScheme="blue" type="submit" disabled={!!pendingForm}>
+              {pendingForm ? "Saving" : "Save"}
             </Button>
           </HStack>
         </VStack>
       </Center>
-    </form>
+    </Form>
   );
 }
