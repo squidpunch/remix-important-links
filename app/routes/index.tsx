@@ -33,7 +33,16 @@ export const loader: LoaderFunction = async () => {
   const prisma = new PrismaClient();
 
   async function main() {
-    const allLinks = await prisma.webLinks.findMany();
+    const allLinks = await prisma.webLinks.findMany({
+      orderBy: [
+        {
+          category: "asc",
+        },
+        {
+          name: "asc",
+        },
+      ],
+    });
     return allLinks;
   }
 
