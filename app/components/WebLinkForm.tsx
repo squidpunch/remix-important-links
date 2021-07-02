@@ -27,28 +27,28 @@ export default function WebLinkForm({
             required
             type="text"
             name="name"
-            value={webLink?.name}
+            defaultValue={webLink?.name}
           />
           <Input
             placeholder="Category"
             required
             type="text"
             name="category"
-            value={webLink?.category}
+            defaultValue={webLink?.category}
           />
           <Input
             placeholder="Url"
             required
             type="text"
             name="link"
-            value={webLink?.link}
+            defaultValue={webLink?.link}
           />
           <Textarea
             placeholder="Notes about the link"
             required
             rows={10}
             name="notes"
-            value={webLink?.notes}
+            defaultValue={webLink?.notes}
           />
           <HStack>
             <Link to="/">
